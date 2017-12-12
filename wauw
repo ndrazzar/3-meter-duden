@@ -1,0 +1,105 @@
+#include <SimpleTimer.h>
+
+int mik1Pin = A0; // anaog port for Mikrofon 1
+int mik2Pin = A1; // Analog port for Mikrofon 2 
+int thresholdCar = 8; // Grænseværdi for hvornår den skal starte med at optage for at være sikker på ikke at gå igang ved almindelig baggrundsstøj (se data insamlet fra tests)
+int thresholdTruck = 14; // intsæt grænseværdi for lastbil
+int thresholdUpper = 18; // indsæt grænseværdi for øvre grænse (en grnse så vi kan kassere data hvis dt f.eks. er en knallert eller et alt for højlydt køretøj der komme forbi
+int mik1Measurements[40]; // mikrofon aflæsninger i et array af en størrelse af 40 
+int mik2Measurements[40]; // mikrofon aflæsninger i et array af en størrelse af 40 
+int mik1Measurements[15] = 0; //den sidste værdi af værditrappen. Ved at definere værdien til 0 vil kodningen fortsætte indtil, at der minimum er fyldt op i array'et
+int countMik1= 0;
+int countMik2 = 0;
+int mik1Value = 0;
+int mik2Value = 0;
+int hast;
+float TimerTid = 0;
+
+void setup() {
+  
+// put your setup code here, to run once:
+
+Serial.begin(9600);
+}
+void calcSpeed(int a, int b)
+{
+  &hast  = a/b;
+  return &hast;
+}
+}
+
+void trappe()
+{
+  while (
+(Mik1Measurements[5] > Mik1Measurements[4]) && 
+(Mik1Measurements[5] > Mik1Measurements[3]) && 
+(Mik1Measurements[5] > Mik1Measurements[2]) && 
+(Mik1Measurements[5] > Mik1Measurements[1]) && 
+(Mik1Measurements[5] > Mik1Measurements[0]) || (mik1Measurements[15] == 0])
+)
+//koden fortsætter indtil at de første 3 værdier, bufferen, hver iæsr er mindre end den nyeste reelle værdi af "trappen" ELLER, at den sidste værdi (15) stadig ikke har fået en værdi større end 0
+ {
+ mik1Measurements[15] = mik1Measurements[14]
+ mik1Measurements[14] = mik1Measurements[13]
+ mik1Measurements[13] = mik1Measurements[12]
+ mik1Measurements[12] = mik1Measurements[11]
+ mik1Measurements[11] = mik1Measurements[10]
+ mik1Measurements[10] = mik1Measurements[9]
+ mik1Measurements[9] = mik1Measurements[8]
+ mik1Measurements[8] = mik1Measurements[7]
+ mik1Measurements[7] = mik1Measurements[6]
+ mik1Measurements[6] = mik1Measurements[5]
+ mik1Measurements[5] = mik1Measurements[4]
+ mik1Measurements[4] = mik1Measurements[3]
+ mik1Measurements[3] = mik1Measurements[2]
+ mik1Measurements[2] = mik1Measurements[1]
+ mik1Measurements[1] = mik1Measurements[0]
+ mik1Measurements[0] = tempReading;
+ tempreading = 0;
+ }
+
+ void gennemsnit()
+ {
+  a = &mik1Measurements[15] + &mik1Measurements[14] + &mik1Measurements[13] + &mik1Measurements[12] 
+    + &mik1Measurements[11] + &mik1Measurements[10] + &mik1Measurements[9]  + &mik1Measurements[8] 
+    + &mik1Measurements[7]  + &mik1Measurements[6]  + &mik1Measurements[5];
+  gns = a/11;
+  return gns;
+ }
+void loop() {
+  // put your main code here, to run repeatedly:
+  
+while (ThresholdCar<Analogread(A0) )
+{
+  tempReading = Analogread(A0);
+  trappe;
+
+  
+}
+  gennemsnit;
+  
+calcSpeed(dist,time);
+}
+
+
+timer.enable(timerId);
+timer.disable(timerId);
+
+/*void wdCallback() {
+    alert user or perform action to restore
+    program state (e.g. reset the microprocessor)
+}
+
+wd_timer_id;
+
+void setup() {
+    wd_timer_id = timer.setInterval(10000, wdCallback);
+}
+
+void loop() {
+    timer.run();
+
+    big complex critical code
+
+    timer.restartTimer(wd_timer_id);
+}*/
