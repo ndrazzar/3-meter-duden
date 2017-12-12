@@ -1,5 +1,5 @@
 #include <SimpleTimer.h>
-
+kjhjjhhj
 int mik1Pin = A0; // anaog port for Mikrofon 1
 int mik2Pin = A1; // Analog port for Mikrofon 2 
 int thresholdCar = 8; // Grænseværdi for hvornår den skal starte med at optage for at være sikker på ikke at gå igang ved almindelig baggrundsstøj (se data insamlet fra tests)
